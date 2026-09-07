@@ -25,10 +25,12 @@ export class Game {
 export function groupGamesByReleaseYear(games) {
   return games.reduce((groups, game) => {
     const year = game.releaseYear;
-    groups[year] ??= [];
-    groups[year].push(game);
+    if (!groups.has(year)) {
+      groups.set(year, []);
+    }
+    groups.get(year).push(game);
     return groups;
-  }, {});
+  }, new Map());
 }
 
 export function getUniquePlatforms(games) {
@@ -42,10 +44,12 @@ export function findGamesByPlatform(games, platform) {
 export function groupGamesByPlatformCount(games) {
   return games.reduce((groups, game) => {
     const count = game.platformCount;
-    groups[count] ??= [];
-    groups[count].push(game);
+    if (!groups.has(count)) {
+      groups.set(count, []);
+    }
+    groups.get(count).push(game);
     return groups;
-  }, {});
+  }, new Map());
 }
 
 export function findGamesReleasedAfter(games, year) {
